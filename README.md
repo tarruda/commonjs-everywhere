@@ -156,6 +156,8 @@ trigger incremental rebuilds.
        is used when building the source map.
     * `sourceMap`: Same as cli. This may be true to make the source map have
       the same name as 'output' with '.map' appended.
+    * `sourceMappingURLRoot`: Prefix for the 'sourceMappingURL' value. Useful
+       if you want to host your source maps in a different server.
     * `inlineSourceMap`: Same as cli.
     * `inlineSources`: Same as cli.
     * `npmSourceMaps`: Same as cli. This is disabled by default because

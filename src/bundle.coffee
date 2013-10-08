@@ -199,7 +199,10 @@ module.exports = (build, processed) ->
   sourceMappingUrl =
     if build.output
       path.relative (path.dirname build.output), build.sourceMap
-    else build.sourceMap
+    else
+      build.sourceMap
+
+  sourceMappingUrl = build.sourceMappingURLRoot + sourceMappingUrl
 
   if build.inlineSourceMap
     datauri = "data:application/json;charset=utf-8;base64,#{btoa "#{map}"}"

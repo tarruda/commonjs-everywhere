@@ -111,7 +111,7 @@ module.exports = (build, processedCache) ->
           consumer = new SourceMapConsumer m
           sources = consumer.sources
           sources[0] = path.resolve(path.join(dn, sources[0]))
-          realCanonicalName = path.relative(build.sourceMapRoot, sources[0])
+          realCanonicalName = path.relative(build.root, sources[0])
           astOrJs.map = m
         if astOrJs.map
           sourceMapToAst ast, astOrJs.map

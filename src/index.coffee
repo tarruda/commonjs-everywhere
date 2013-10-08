@@ -15,19 +15,23 @@ class Powerbuild
       options.minify = true
     options.uids or= {next: 1, names: {}}
     options.npmSourceMaps ?= false
+    options.sourceMappingURLRoot ?= ''
     options.root or= process.cwd()
     options.node ?= true
     {@output, @export, @entryPoints, @root, @node, @inlineSources,
      @verbose, @ignoreMissing, @sourceMap, @inlineSourceMap,
      @mainModule, @minify, @aliases, @handlers, @processed, @uids,
-     @npmSourceMaps, @compress, @debug} = options
-
-    @sourceMapRoot = if @sourceMap? then (path.relative (path.dirname @sourceMap), @root) or '.'
+     @npmSourceMaps, @compress, @debug, @sourceMappingURLRoot} = options
 
     if @output
-      @sourceMapRoot = path.relative(path.dirname(@output), @root)
       if @sourceMap == true
         @sourceMap = "#{@output}.map"
+
+    @sourceMapRoot =
+      if @sourceMap?
+        path.relative (path.dirname @sourceMap), @root
+      else
+        '.'
 
     @handlers =
       '.json': (json, canonicalName) ->
