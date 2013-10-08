@@ -1,8 +1,9 @@
 node
 node/*
 !node/lib
-src
 test
+tests.js
+tests.js.map
 .gitmodules
 Makefile
 powerbuild-cache
