@@ -18,7 +18,7 @@ module.exports = (grunt) ->
     for f in @files
       opts = _.clone(options)
       if not opts.disableDiskCache
-        cache = buildCache(opts.cachePath)
+        cache = buildCache(opts.node, opts.cachePath)
         opts.processed = cache.processed
         opts.uids = cache.uids
       opts.entryPoints = grunt.file.expand(f.orig.src)

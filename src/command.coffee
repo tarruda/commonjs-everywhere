@@ -131,7 +131,7 @@ buildBundle = ->
     process.stdout.write "#{code}\n"
 
 if not options.disableDiskCache
-  cache = buildCache(options.cachePath)
+  cache = buildCache(options.node, options.cachePath)
   options.processed = cache.processed
   options.uids = cache.uids
 

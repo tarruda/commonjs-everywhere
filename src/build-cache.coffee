@@ -6,32 +6,28 @@ initialized = false
 initSignalHandlers = ->
   if initialized then return
   initialized = true
+  process.on 'exit', ->
+    for own cachePath, cache of caches
+      fs.writeFileSync cachePath, JSON.stringify cache
+
   process.on 'SIGINT', process.exit
   process.on 'SIGTERM', process.exit
   process.on 'uncaughtException', (e) ->
     # to be safe, remove all cache files
-    for own k of caches
-      if fs.existsSync(k)
-        fs.unlinkSync(k)
+    for own cachePath of caches
+      if fs.existsSync(cachePath)
+        fs.unlinkSync(cachePath)
     throw e
 
 caches = {}
+defaultCachePath = path.join(process.cwd(), '.powerbuild~')
 
-module.exports = (cachePath = path.join(process.cwd(), '.powerbuild~')) ->
-  if {}.hasOwnProperty.call caches, cachePath
+module.exports = (node = true, cachePath = defaultCachePath) ->
+  if {}.hasOwnProperty.call(caches, cachePath) and
+      (caches[cachePath].node or not node)
     return caches[cachePath]
 
   initSignalHandlers()
-
-  process.on 'exit', ->
-    fs.writeFileSync cachePath, JSON.stringify caches[cachePath]
-
-  process.on 'uncaughtException', (e) ->
-    # An exception may be thrown due to corrupt cache or incompatibilities
-    # between versions, remove it to be safe
-    try fs.unlinkSync cachePath
-    caches[cachePath].processed = {}
-    throw e
 
   if fs.existsSync cachePath
     caches[cachePath] = JSON.parse fs.readFileSync cachePath, 'utf8'
@@ -40,5 +36,6 @@ module.exports = (cachePath = path.join(process.cwd(), '.powerbuild~')) ->
     caches[cachePath] =
       processed: {}
       uids: {next: 1, names: {}}
+      node: node
 
   return caches[cachePath]
