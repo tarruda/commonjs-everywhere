@@ -59,6 +59,8 @@ module.exports = (build, processedCache) ->
   while worklist.length
     {filename, canonicalName, isNpmModule, isCoreModule} = worklist.pop()
 
+    disableSourceMap = canonicalName of build.disableSourceMap
+
     # support aliasing to falsey values to omit files
     continue unless filename
 
@@ -224,7 +226,8 @@ module.exports = (build, processedCache) ->
     # later
     lineCount = code.split('\n').length
     processed[filename] = {id, canonicalName, code, map, lineCount, mtime,
-      deps, nodeFeatures, isNpmModule, isCoreModule, realCanonicalName}
+      deps, nodeFeatures, isNpmModule, isCoreModule, realCanonicalName
+      disableSourceMap}
     if processedCache
       # Cache entries are only updated, never deleted, this enables multiple
       # build configurations to share it

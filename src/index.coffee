@@ -13,6 +13,7 @@ class Powerbuild
     options.inlineSources ?= false
     if options.compress
       options.minify = true
+    options.disableSourceMap or= []
     options.uids or= {next: 1, names: {}}
     options.npmSourceMaps ?= false
     options.sourceMappingURLRoot ?= ''
@@ -22,6 +23,11 @@ class Powerbuild
      @verbose, @ignoreMissing, @sourceMap, @inlineSourceMap,
      @mainModule, @minify, @aliases, @handlers, @processed, @uids,
      @npmSourceMaps, @compress, @debug, @sourceMappingURLRoot} = options
+
+    @disableSourceMap = {}
+
+    for canonicalName in options.disableSourceMap
+      @disableSourceMap[canonicalName] = true
 
     if @output
       if @sourceMap == true

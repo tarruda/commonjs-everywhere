@@ -110,7 +110,7 @@ bundle = (build, processed) ->
 
   files = {}
 
-  for own filename, {id, canonicalName, realCanonicalName, code, map, lineCount, isNpmModule, nodeFeatures} of processed
+  for own filename, {id, canonicalName, realCanonicalName, code, map, lineCount, isNpmModule, nodeFeatures, disableSourceMap} of processed
     if nodeFeatures.__filename or nodeFeatures.__dirname
       files[id] = realCanonicalName or canonicalName
     setImmediate = setImmediate or nodeFeatures.setImmediate
@@ -122,7 +122,7 @@ bundle = (build, processed) ->
       });
       """
     lineOffset += 2 # skip linefeed plus the 'require.define' line
-    if build.npmSourceMaps or not isNpmModule
+    if not disableSourceMap and build.npmSourceMaps or not isNpmModule
       orig = new SourceMapConsumer map
       orig.eachMapping (m) ->
         resultMap.addMapping
