@@ -24,13 +24,18 @@ defaultCachePath = path.join(process.cwd(), '.powerbuild~')
 
 module.exports = (node = true, cachePath = defaultCachePath) ->
   if {}.hasOwnProperty.call(caches, cachePath) and
-      (caches[cachePath].node or not node)
+      caches[cachePath].node == node
     return caches[cachePath]
 
   initSignalHandlers()
 
-  if fs.existsSync cachePath
+  if not caches[cachePath] and fs.existsSync cachePath
     caches[cachePath] = JSON.parse fs.readFileSync cachePath, 'utf8'
+
+  if caches[cachePath] and caches[cachePath].node != node
+    console.error(
+      "Warning: Configurations with different values for the 'node' option cannot share the same cache(reseting #{cachePath})")
+    delete caches[cachePath]
 
   if not caches[cachePath]
     caches[cachePath] =
