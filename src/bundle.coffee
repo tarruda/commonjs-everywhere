@@ -2,7 +2,6 @@ path = require 'path'
 {SourceMapConsumer, SourceMapGenerator} = require 'source-map'
 {btoa} = require 'Base64'
 UglifyJS = require 'uglify-js'
-sourceMapToAst = require './sourcemap-to-ast'
 UglifyJS.AST_Node.warn_function = ->
 
 

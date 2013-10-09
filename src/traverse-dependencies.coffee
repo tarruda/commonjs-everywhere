@@ -8,10 +8,10 @@ estraverse = require 'estraverse'
 escodegen = require 'escodegen'
 escope = require 'escope'
 {SourceMapConsumer} = require 'source-map'
+sourcemapToAst = require 'sourcemap-to-ast'
 
 canonicalise = require './canonicalise'
 relativeResolve = require './relative-resolve'
-sourceMapToAst = require './sourcemap-to-ast'
 isCore = require './is-core'
 
 
@@ -114,7 +114,7 @@ module.exports = (build, processedCache) ->
           realCanonicalName = path.relative(build.root, sources[0])
           astOrJs.map = m
         if astOrJs.map
-          sourceMapToAst ast, astOrJs.map
+          sourcemapToAst ast, astOrJs.map
       catch e
         if e.lineNumber
           throw new Error "Syntax error in #{filename} at line #{e.lineNumber}, column #{e.column}#{e.message[(e.message.indexOf ':')..]}"
