@@ -198,8 +198,10 @@ module.exports = (build, processed) ->
     map = sm.toString()
 
   if (build.sourceMap or build.inlineSourceMap) and build.inlineSources
+    map = SourceMapGenerator.fromSourceMap(new SourceMapConsumer(map))
     for own filename, {code: src, canonicalName} of processed
       map.setSourceContent canonicalName, src
+    map = map.toString()
 
   if build.sourceMap
     sourceMappingUrl =
