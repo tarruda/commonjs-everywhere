@@ -24,6 +24,7 @@ PROCESS = """
 
 commonjs = (filenameMap) -> """
   (function() {
+    var loading = {};
     var files = #{JSON.stringify(filenameMap)};
     var outer;
     if (typeof require === 'function') {
@@ -32,6 +33,9 @@ commonjs = (filenameMap) -> """
     function inner(id, parentModule) {
       if({}.hasOwnProperty.call(inner.cache, id))
         return inner.cache[id];
+
+      if({}.hasOwnProperty.call(loading, id))
+        return loading[id].exports;
 
       var resolved = inner.resolve(id);
       if(!resolved && outer) {
@@ -57,8 +61,10 @@ commonjs = (filenameMap) -> """
       };
       if(parentModule) parentModule.children.push(module$);
 
-      inner.cache[id] = module$.exports;
+      loading[id] = module$;
       resolved.call(this, module$, module$.exports, dirname, filename);
+      inner.cache[id] = module$.exports;
+      delete loading[id];
       module$.loaded = true;
       return inner.cache[id] = module$.exports;
     }
@@ -138,7 +144,7 @@ bundle = (build, processed) ->
 
   if bufferPath and build.node
     {id} = processed[bufferPath]
-    result += "\nvar Buffer = require('#{id}');"
+    result += "\nvar Buffer = require('#{id}').Buffer;"
 
   if consolePath and build.node
     {id} = processed[consolePath]
@@ -195,13 +201,13 @@ module.exports = (build, processed) ->
     for own filename, {code: src, canonicalName} of processed
       map.setSourceContent canonicalName, src
 
-  sourceMappingUrl =
-    if build.output
-      path.relative (path.dirname build.output), build.sourceMap
-    else
-      build.sourceMap
+    sourceMappingUrl =
+      if build.output
+        path.relative (path.dirname build.output), build.sourceMap
+      else
+        build.sourceMap
 
-  sourceMappingUrl = build.sourceMappingURLRoot + sourceMappingUrl
+    sourceMappingUrl = build.sourceMappingURLRoot + sourceMappingUrl
 
   if build.inlineSourceMap
     datauri = "data:application/json;charset=utf-8;base64,#{btoa "#{map}"}"

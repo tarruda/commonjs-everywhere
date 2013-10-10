@@ -1,4 +1,6 @@
 path = require 'path'
 
 module.exports = (root, file) ->
-  "#{path.relative root, path.resolve root, file}".replace /\\/g, '/'
+  root = path.resolve root
+  rv = "#{path.relative root, file}".replace /\\/g, '/'
+  return rv
