@@ -169,7 +169,7 @@ trigger incremental rebuilds.
 
 This package includes a grunt task that takes any of the API or cli options(
 with dashes removed and converted to camelCase). For an example see this
-package's [test bundle configuration]()
+package's [test bundle configuration](https://github.com/tarruda/powerbuild/blob/master/Gruntfile.coffee)
 
 ## Examples
 
