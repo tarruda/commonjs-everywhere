@@ -32,7 +32,7 @@ resolvePath = ({extensions, aliases, root, cwd, path: givenPath}, pkgMainField =
 module.exports = ({extensions, aliases, root, cwd, path: givenPath}) ->
   aliases ?= {}
   resolved = resolvePath {extensions, aliases, root, cwd, path: givenPath}
-  canonicalName = if isCore givenPath then givenPath else canonicalise root, resolved
+  canonicalName = canonicalise root, resolved
   if {}.hasOwnProperty.call aliases, canonicalName
     resolved = aliases[canonicalName] and resolvePath {extensions, aliases, root, path: aliases[canonicalName]}
   {filename: resolved, canonicalName}
