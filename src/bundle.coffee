@@ -201,6 +201,7 @@ module.exports = (build, processed) ->
     for own filename, {code: src, canonicalName} of processed
       map.setSourceContent canonicalName, src
 
+  if build.sourceMap
     sourceMappingUrl =
       if build.output
         path.relative (path.dirname build.output), build.sourceMap
