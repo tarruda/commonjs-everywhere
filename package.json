@@ -49,7 +49,8 @@
     "escodegen": "0.0.27",
     "esprima": "~1.0.4",
     "escope": "~1.0.0",
-    "sourcemap-to-ast": "0.0.1"
+    "sourcemap-to-ast": "0.0.1",
+    "browser-builtins": "~2.0.4"
   },
   "devDependencies": {
     "scopedfs": "~0.1.0",
