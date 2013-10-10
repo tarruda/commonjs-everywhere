@@ -226,7 +226,7 @@ module.exports = (build, processedCache) ->
     # later
     lineCount = code.split('\n').length
     processed[filename] = {id, canonicalName, code, map, lineCount, mtime,
-      deps, nodeFeatures, isNpmModule, isCoreModule, realCanonicalName
+      deps, nodeFeatures, isNpmModule, isCoreModule, realCanonicalName, src
       disableSourceMap}
     if processedCache
       # Cache entries are only updated, never deleted, this enables multiple
