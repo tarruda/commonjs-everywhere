@@ -2,6 +2,10 @@
 
 > CommonJS bundler with aliasing, extensibility, and source maps from the minified JS bundle. Forked from commonjs-everywhere adding speed improvements, persistent disk cache for incremental builds, support for reading '// [#@] sourceMappingURL' from input files and bundled grunt task
 
+## Quickstart
+
+Use [this grunt-init template](https://github.com/tarruda/grunt-init-js-commonjs/blob/master/template.coffee) which setups a project with powerbuild, automated testing with node.js, phantomjs, travis and saucelabs.
+
 ## Main changes from commonjs-everywhere
 
   - Escodegen is only used when generating partial source maps, the final
