@@ -4,7 +4,7 @@
 
 ## Quickstart
 
-Use [this grunt-init template](https://github.com/tarruda/grunt-init-js-commonjs/blob/master/template.coffee) which setups a project with powerbuild, automated testing with node.js, phantomjs, travis and saucelabs.
+Use [this grunt-init template](https://github.com/tarruda/grunt-init-js-commonjs) which setups a project with powerbuild, automated testing with node.js, phantomjs, travis and saucelabs.
 
 ## Main changes from commonjs-everywhere
 
