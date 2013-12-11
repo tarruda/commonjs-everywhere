@@ -41,7 +41,7 @@
     "Base64": "~0.1.2",
     "mktemp": "~0.3.0",
     "nopt": "~2.1.2",
-    "resolve": "0.5.x",
+    "resolve": "0.6.1",
     "source-map": "~0.1.30",
     "lodash": "~2.2.1",
     "uglify-js": "~2.4.0",

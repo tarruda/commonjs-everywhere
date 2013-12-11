@@ -159,12 +159,13 @@ module.exports = (build, processedCache) ->
           if not (isCoreDep = isCoreModule or isCore(moduleName)) or build.node
             rewriteRequire = true
             resolved = relativeResolve {extensions: build.extensions, aliases, root: build.root, cwd, path: moduleName}
-            # Only include an external dep if its not a core module or
-            # we are emulating a node.js environment
-            isNpmDep = isNpmModule or /^[^/.]/.test(moduleName)
-            dep = _.assign(resolved, {isNpmModule: isNpmDep, isCoreModule: isCoreDep})
-            worklist.push dep
-            deps.push dep
+            if resolved
+              # Only include an external dep if its not a core module or
+              # we are emulating a node.js environment
+              isNpmDep = isNpmModule or /^[^/.]/.test(moduleName)
+              dep = _.assign(resolved, {isNpmModule: isNpmDep, isCoreModule: isCoreDep})
+              worklist.push dep
+              deps.push dep
         catch e
           if build.ignoreMissing
             return { type: 'Literal', value: null }
