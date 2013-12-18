@@ -144,7 +144,14 @@ bundle = (build, processed) ->
 
   if bufferPath and build.node
     {id} = processed[bufferPath]
-    result += "\nvar Buffer = require('#{id}').Buffer;"
+    result += "\nvar Buffer = require('#{id}').Buffer;\n"
+    result +=
+      """
+      if (!Buffer.prototype.toJSON)
+        Buffer.prototype.toJSON = function() {
+          return Array.prototype.slice.call(this, 0);
+        };
+      """
 
   if consolePath and build.node
     {id} = processed[consolePath]
